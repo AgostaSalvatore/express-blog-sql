@@ -1,5 +1,17 @@
+//connessione al db
+const connection = require('../data/dbBlog');
+
 const index = (req, res) => {
-    res.send('elenco posts')
+    //query
+    const sql = 'SELECT * FROM posts'
+    connection.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: 'Error during the reading of posts' });
+        } else {
+            res.json(results);
+        }
+    })
 }
 
 const show = (req, res) => {
