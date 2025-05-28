@@ -16,7 +16,18 @@ const index = (req, res) => {
 
 const show = (req, res) => {
     const id = req.params.id
-    res.send('elenco post con id ' + id)
+
+    //creo la query
+    const sql = 'SELECT * FROM posts WHERE id = ' + id
+
+    connection.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: 'Error during the reading of posts' + err });
+        } else {
+            res.json(results);
+        }
+    })
 }
 
 const destroy = (req, res) => {
